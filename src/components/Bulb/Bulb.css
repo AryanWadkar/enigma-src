@@ -1,0 +1,19 @@
+.btn{
+    background: #1E1E1E;
+    width: 40px; 
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid#FCF9F4;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    color: #FCF9F4;
+    font-size: 32px;
+    margin: 10px 20px 10px 20px;
+}
+
+.active{
+    background-color: #FFC700;
+    border: 3px solid#FFC700;
+    color: #1E1E1E;
+}

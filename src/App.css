@@ -1,0 +1,56 @@
+.App {
+  text-align: center;
+  align-items: center;
+  font-family: 'Iceland', cursive;
+  margin-top: 10vh;
+  color: #FCF9F4;
+  outline: none;
+}
+
+.row{
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.column{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+.sized-box-h{
+  margin: 0px 40px 0px 40px;
+}
+
+.sized-box-v{
+  margin: 40px 0px 40px 0px;
+}
+
+h1 {
+  font-size: 96px;
+  font-weight: 500;
+}
+
+.pb{
+  margin: auto;
+  margin-top: 20px;
+  padding: 1vh 15vw 1vh 15vw;
+  border: 3px solid #FCF9F4;
+  color: #FCF9F4;
+  border-radius: 5px;
+  font-size: 42px;
+  cursor: pointer;
+}
+
+.overlay{
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 50;
+  top: 0;
+  left: 0;
+  position: fixed;
+}
