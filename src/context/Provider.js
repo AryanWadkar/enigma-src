@@ -258,19 +258,16 @@ const configctx = React.createContext(
             "B":"Y",
             "X":"Z",
         },
-        plugboard:{
-            "A":"M",
+        plugboard:[
+            {"M":"A",},{"R":"Q",},{"T":"X",},{"G":"B",},{"Y":"Z",},{"E":"C",}
+        ],
+        plugboardrev:{
             "M":"A",
-            "Q":"R",
             "R":"Q",
-            "X":"T",
             "T":"X",
-            "B":"G",
             "G":"B",
-            "Z":"Y",
             "Y":"Z",
-            "C":"E",
-            "E":"C"
+            "E":"C", 
         }
     }
 )

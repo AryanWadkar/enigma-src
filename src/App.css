@@ -54,3 +54,20 @@ h1 {
   left: 0;
   position: fixed;
 }
+
+.button{
+  color: #FCF9F4;
+  border: 2px solid #FCF9F4;
+  border-radius: 50%;
+  padding: 20px;
+  height: 60px;
+  width: 60px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 2px 2px 6px #888888,-2px -2px 6px #888888;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+}

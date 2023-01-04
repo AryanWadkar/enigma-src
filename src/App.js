@@ -192,22 +192,28 @@ function handlerotors(x){
     <Fragment>
     {overlay && <div className='overlay'> <PlugBoard hidefn={hidepb} pbconfig={rotorconfig.plugboard}/></div>}
     <div className="App" onKeyDown={pressHandler} tabIndex={0} onKeyUp={releaseHandler}>
+      <div className='column'>
+        <div className='button'> Tap to start</div>
+      </div>
+      <div>
         <div className="row">
-          <Rotor rotorstate={rotorstates.r3} rotormanager={handlerotors} rindex={3}/>
-          <Rotor rotorstate={rotorstates.r2} rotormanager={handlerotors} rindex={2}/>
-          <Rotor rotorstate={rotorstates.r1} rotormanager={handlerotors} rindex={1}/>
-        <div className="sized-box-h"></div>
-          <h1>ENIGMA</h1>
-        </div>
-        <div className="sized-box-v"></div>
-        <keyctx.Provider value={currkey}>
-        <div className="column">
-          <RowQ></RowQ>
-          <RowA></RowA>
-          <RowZ></RowZ>
-          <div className="pb" onClick={showpb}>PLUGBOARD</div>
-        </div>
-        </keyctx.Provider>
+            <Rotor rotorstate={rotorstates.r3} rotormanager={handlerotors} rindex={3}/>
+            <Rotor rotorstate={rotorstates.r2} rotormanager={handlerotors} rindex={2}/>
+            <Rotor rotorstate={rotorstates.r1} rotormanager={handlerotors} rindex={1}/>
+          <div className="sized-box-h"></div>
+            <h1>ENIGMA</h1>
+          </div>
+          <div className="sized-box-v"></div>
+          <keyctx.Provider value={currkey}>
+            <div className="column">
+              <RowQ></RowQ>
+              <RowA></RowA>
+              <RowZ></RowZ>
+              <div className="pb" onClick={showpb}>PLUGBOARD</div>
+            </div>
+          </keyctx.Provider>
+      </div>
+
     </div>
     </Fragment>
   );

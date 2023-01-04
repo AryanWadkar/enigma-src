@@ -1,32 +1,22 @@
 import './plugboard.css'
+import Plug from'./Plug'
 
-function PlugBoard({hidefn},pbconfig){
-    var initstate = 'normal';
-    return(
+function PlugBoard({hidefn,pbconfig}){
+
+
+        return(
         <div className="box">
             <button className="close" onClick={hidefn}>X</button>
             <h3>PLUGBOARD</h3>
             <div className='input-section'>
-                <div className='top-row'>
-                    <input className={initstate} maxLength="1" type="text"></input>
-                    <input className={initstate}></input>
-                    <input className={initstate}></input>
-                    <input className={initstate}></input>
-                    <input className={initstate}></input>
-                    <input className={initstate}></input>
-                    <input className={initstate}></input>
-                    <input className={initstate}></input>
-                </div>
-                <div className='bottom-row'>
-                    <input className={initstate}></input>
-                    <input className={initstate}></input>
-                    <input className={initstate}></input>
-                    <input className={initstate}></input>
-                    <input className={initstate}></input>
-                    <input className={initstate}></input>
-                    <input className={initstate}></input>
-                    <input className={initstate}></input>
-                </div>
+                {
+                    pbconfig.map((e)=>{
+                        return(<Plug inlower={Object.keys(e)} inupper={Object.values(e)}></Plug>)
+                    })
+                }
+                {
+                    
+                }
             </div>
             <button className='save'>SAVE</button>
         </div>
