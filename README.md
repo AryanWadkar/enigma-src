@@ -5,6 +5,7 @@ A mini web app that simulates the infamous enigma machine, made entirely in Reac
 ### How to use:
 
 Click anywhere on the site to get the machine started
+
 To Encode : 
 1) Set up the rollers (Remember these positions, you will need them to decode your message)
 2) Start punching in your encrypted code or the message you want to encrypt on your keyboard
