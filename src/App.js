@@ -4,19 +4,24 @@ import RowA from './components/Keyboard/RowA';
 import RowQ from './components/Keyboard/RowQ';
 import RowZ from './components/Keyboard/RowZ';
 import {keyctx,configctx} from './context/Provider'
-import { Fragment, useContext, useState } from 'react';
+import { Fragment, useContext, useState, useEffect } from 'react';
 import PlugBoard from './components/PlugBoard/Plugboard';
+import { BiInfoCircle } from "react-icons/bi";
+
 function App() {
   const [currkey,changekey] = useState("-");
+  const [pressedkey,presschange] = useState("-");
   const [rotorstates,updaterotor] = useState({
     r1:0,
     r2:0,
     r3:0,
     n1:25,
     n2:25
-  })
+  });
+  const [showLoader, setShowLoader] = useState(true);
   const [overlay, switcholay] = useState(false);
-
+  const [string1, setString1] = useState('');
+  const [string2, setString2] = useState('');
   const rotorconfig = useContext(configctx);
   /*
   function getout(inval)
@@ -45,7 +50,17 @@ function App() {
     return out;
   }
   */
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setShowLoader(false);
+    }, 3000);
 
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, []);
+
+  
   function pb(inlet){
     if (rotorconfig.plugboard[inlet])
     {
@@ -73,22 +88,28 @@ function App() {
     var d1o = rcg.c11[r1o];
     var r0o = rcg.dictn[(rcg.dictA[d1o]-rotorstates.r1+26)%26];
     var pbo = pb(r0o);
-    var csl = `input:${inlet} pbin:${pbin} r1:${r1} d1:${d1} r2:${r2} d2:${d2} r3:${r3} d3:${d3} ref:${ref} r3:${r3o} d3:${d3o} r2:${r2o} d2:${d2o} r1:${r1o} d1:${d1o} r0:${r0o} pbo:${pbo}`
-    console.log(csl)
+    //var csl = `input:${inlet} pbin:${pbin} r1:${r1} d1:${d1} r2:${r2} d2:${d2} r3:${r3} d3:${d3} ref:${ref} r3:${r3o} d3:${d3o} r2:${r2o} d2:${d2o} r1:${r1o} d1:${d1o} r0:${r0o} pbo:${pbo}`
     return pbo;
   }
 
   function pressHandler(e){
     var key = e.key;
-    if(key.length===1)
+    if(rotorconfig.dictA[key.toUpperCase()]+1)
     {
-      changekey(enigmamech(key.toUpperCase()));
+      var out = enigmamech(key.toUpperCase());
+      presschange(key.toUpperCase());
+      changekey(out);
     }
   }
       
   function releaseHandler(){
   if(currkey!=="-")
   {
+    setString1((prevValue)=>{
+      console.log(prevValue);
+      return prevValue+pressedkey;
+    });
+    setString2(prevValue => prevValue +currkey);
     changekey("-");
     handlerotors(1);
   }
@@ -191,32 +212,82 @@ function handlerotors(x){
   return (
     <Fragment>
     {overlay && <div className='overlay'> <PlugBoard hidefn={hidepb} pbconfig={rotorconfig.plugboard}/></div>}
-    <div className="App" onKeyDown={pressHandler} tabIndex={0} onKeyUp={releaseHandler}>
-      <div className='column'>
-        <div className='button'> Tap to start</div>
-      </div>
-      <div>
-        <div className="row">
-            <Rotor rotorstate={rotorstates.r3} rotormanager={handlerotors} rindex={3}/>
-            <Rotor rotorstate={rotorstates.r2} rotormanager={handlerotors} rindex={2}/>
-            <Rotor rotorstate={rotorstates.r1} rotormanager={handlerotors} rindex={1}/>
-          <div className="sized-box-h"></div>
-            <h1>ENIGMA</h1>
-          </div>
-          <div className="sized-box-v"></div>
-          <keyctx.Provider value={currkey}>
-            <div className="column">
-              <RowQ></RowQ>
-              <RowA></RowA>
-              <RowZ></RowZ>
-              <div className="pb" onClick={showpb}>PLUGBOARD</div>
+      {showLoader ? (
+        <div className={`loader ${showLoader ? 'show' : 'hide'}`}>
+          <h1 className="blink">Enigma</h1>
+        </div>
+      ):<div className="App" onKeyDown={pressHandler} tabIndex={0} onKeyUp={releaseHandler}>
+        <TaptoStart></TaptoStart>
+        <div>
+            <div className="row">
+                <Rotor rotorstate={rotorstates.r3} rotormanager={handlerotors} rindex={3}/>
+                <Rotor rotorstate={rotorstates.r2} rotormanager={handlerotors} rindex={2}/>
+                <Rotor rotorstate={rotorstates.r1} rotormanager={handlerotors} rindex={1}/>
+                <div className="sized-box-h"></div>
+                <h1>ENIGMA</h1>
             </div>
-          </keyctx.Provider>
-      </div>
-
-    </div>
+            <div className="sized-box-v"></div>
+              <keyctx.Provider value={currkey}>
+                  <div className="column">
+                    <RowQ></RowQ>
+                    <RowA></RowA>
+                    <RowZ></RowZ>
+                    <div className="pb" onClick={showpb}>PLUGBOARD</div>
+                  </div>
+              </keyctx.Provider>
+            <TwoBoxComponent string1={string1} string2={string2}></TwoBoxComponent>
+        </div>
+        
+      <div className='column'>
+            <div className='info'><BiInfoCircle size={24}></BiInfoCircle></div>
+      </div>    
+      </div>}
     </Fragment>
   );
 }
 
 export default App;
+
+
+function TaptoStart(){
+  const [clicked,setclick]=useState("");
+
+  function clickhandler()
+  {
+    if(clicked==="")
+    {
+      setclick("clicked");
+    }else{
+      setclick("");
+    }
+  }
+  return(
+    <div className='column'>
+      <div className={`button ${clicked}`} onClick={clickhandler}> Tap to start</div>
+    </div>
+  );
+}
+
+
+const TwoBoxComponent = ({ string1, string2 }) => {
+  const [box1Content, setBox1Content] = useState(string1);
+  const [box2Content, setBox2Content] = useState(string2);
+
+  useEffect(() => {
+    setBox1Content(string1);
+    setBox2Content(string2);
+  }, [string1, string2]);
+
+  return (
+    <div className="two-box-container">
+      <div className="boxb">
+        <h2>Input</h2>
+        <p>{box1Content}</p>
+      </div>
+      <div className="boxb">
+        <h2>Output</h2>
+        <p>{box2Content}</p>
+      </div>
+    </div>
+  );
+};
