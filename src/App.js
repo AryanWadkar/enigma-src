@@ -211,7 +211,6 @@ function handlerotors(x){
 
   return (
     <Fragment>
-    {overlay && <div className='overlay'> <PlugBoard hidefn={hidepb} pbconfig={rotorconfig.plugboard}/></div>}
       {showLoader ? (
         <div className={`loader ${showLoader ? 'show' : 'hide'}`}>
           <h1 className="blink">Enigma</h1>
@@ -232,15 +231,10 @@ function handlerotors(x){
                     <RowQ></RowQ>
                     <RowA></RowA>
                     <RowZ></RowZ>
-                    <div className="pb" onClick={showpb}>PLUGBOARD</div>
                   </div>
               </keyctx.Provider>
             <TwoBoxComponent string1={string1} string2={string2}></TwoBoxComponent>
-        </div>
-        
-      <div className='column'>
-            <div className='info'><BiInfoCircle size={24}></BiInfoCircle></div>
-      </div>    
+        </div> 
       </div>}
     </Fragment>
   );
